@@ -14,6 +14,13 @@ logger = logging.getLogger(__name__)
 # Simple in-memory brute force tracker
 login_attempts: dict = defaultdict(list)
 
+# Headers to remove for security
+HEADERS_TO_REMOVE = [
+    "server",
+    "x-powered-by",
+    "x-aspnet-version",
+    "x-aspnetmvc-version",
+]
 
 class SecurityMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
@@ -58,10 +65,10 @@ class SecurityMiddleware(BaseHTTPMiddleware):
         if settings.FORCE_HTTPS:
             response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
 
-        # Remove server identification
-        if "server" in response.headers:
-            del response.headers["server"]
-        response.headers.pop("x-powered-by", None)
+        # Remove sensitive headers safely
+        for header in HEADERS_TO_REMOVE:
+            if header in response.headers:
+                del response.headers[header]
 
         return response
 
