@@ -60,11 +60,12 @@ class Settings(BaseSettings):
     OPENAI_API_KEY: Optional[str] = None
     OLLAMA_URL: Optional[str] = None
 
-
-    # Custom / self-hosted AI endpoint (OpenAI-compatible)
+    # Custom / self-hosted AI endpoint
     CUSTOM_AI_URL: Optional[str] = None
     CUSTOM_AI_API_KEY: Optional[str] = None
     CUSTOM_AI_MODEL: Optional[str] = None
+    CUSTOM_AI_USERNAME: Optional[str] = None
+    CUSTOM_AI_PASSWORD: Optional[str] = None
 
     # Data directory
     DATA_DIR: str = "/app/data"
@@ -97,7 +98,3 @@ class Settings(BaseSettings):
 
 
 settings = Settings()
-
-    # Custom / self-hosted AI endpoint (OpenAI-compatible)
-    CUSTOM_AI_USERNAME: Optional[str] = None
-    CUSTOM_AI_PASSWORD: Optional[str] = None
